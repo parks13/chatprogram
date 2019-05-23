@@ -27,7 +27,7 @@
      <number>1</number>
     </property>
     <widget class="QWidget" name="page">
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="userNameInput">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -43,7 +43,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="joinButton">
       <property name="geometry">
        <rect>
         <x>270</x>
@@ -80,22 +80,22 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_2">
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QListWidget" name="chatWindow">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>20</y>
-        <width>431</width>
+        <width>441</width>
         <height>371</height>
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="sendButton">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>400</x>
         <y>400</y>
-        <width>75</width>
+        <width>71</width>
         <height>31</height>
        </rect>
       </property>
@@ -103,7 +103,7 @@
        <string>Send</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_3">
+     <widget class="QLineEdit" name="userInput">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -113,7 +113,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QScrollArea" name="scrollArea">
+     <widget class="QScrollArea" name="clientList">
       <property name="geometry">
        <rect>
         <x>490</x>
@@ -136,7 +136,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="WhosOnNowLabel">
       <property name="geometry">
        <rect>
         <x>490</x>
