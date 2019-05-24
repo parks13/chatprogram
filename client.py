@@ -29,6 +29,11 @@ class ChatGUI(UIClass, QtBaseClass):
 
         # ADD more setup code for GUI if needed...
 
+        # Create and start thread of sending and receiving message - IS THIS RIGHT?
+        inMessage = Thread(target=self.receiveMessage, args=(clientSocket,))
+        outMessage = Thread(target=self.sendMessage, args=(clientSocket,))
+        inMessage.start()
+        outMessage.start()
 
 
 
@@ -60,6 +65,7 @@ class ChatGUI(UIClass, QtBaseClass):
 
 
 
+
 # Code below this line should be modified to fit into the GUI
 
 
@@ -74,11 +80,6 @@ welcomeMessage = clientSocket.recv(1024).decode('utf-8')
 username = input(welcomeMessage)
 clientSocket.send(username.encode('utf-8'))
 
-# create and start thread of sending and receiving message
-inMessage = Thread(target=receiveMessage, args=(clientSocket,))
-outMessage = Thread(target=sendMessage, args=(clientSocket,))
-inMessage.start()
-outMessage.start()
 
 # go on loop until the user enters /quit to exit
 while 1:
