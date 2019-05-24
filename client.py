@@ -4,30 +4,53 @@ from threading import *
 import time
 import sys
 
+# Load the UI file
 UIClass, QtBaseClass = uic.loadUiType("mainwindow.ui")
 
+# **CHANGE IF NECESSARY**
+# Server Address and Port
+serverName = '127.0.0.1'   # localhost - 127.0.0.1
+serverPort = '43500'  # 43500 - 43505 for luke.cs.spu.edu
 
-class MyApp(UIClass, QtBaseClass):  # load the GUI
+# Setup the TCP connection to the server
+clientSocket = socket(AF_INET, SOCK_STREAM)  # TCP socket
+clientSocket.connect((serverName, int(serverPort)))
+
+# Class to handle the GUI of the chat program
+class ChatGUI(UIClass, QtBaseClass):
+    # Constructs the GUI
     def __init__(self):
         UIClass.__init__(self)
         QtBaseClass.__init__(self)
         self.setupUi(self)
-        self.setWindowTitle('Chat Program')  # set the title of the program window
+        self.setWindowTitle('Chat Program') # set the title of the program window
+        self.userInput.setPlaceholderText("Enter your messages here")
+        self.sendButton.clicked.connect(self.sendMessage) # connect send button to a sendMessage function
 
-    def sendMessage(sock):  # function to send message
+        # ADD more setup code for GUI if needed...
+
+
+
+
+    # Function to send message to the server
+    def sendMessage(self, sock):
         while 1:
-            # gather and send message to server
-            message = input()
+            # Send message to server
+            message = self.userInput.toPlainText()
             sock.send(message.encode('utf-8'))
 
-    def receiveMessage(sock):   # function to receive the message
+            # Display the sent message in chat window
+            self.chatWindow.addItem("YOU SENT >> " + message)
+
+    # Function to receive and display the messages from the server
+    def receiveMessage(self, sock):
         while 1:
             try:
-                # receive message from server and print it
+                # Receive message from server and print it
                 incomingMessage = sock.recv(1024).decode('utf-8')
                 if incomingMessage:
-                    print(">> " + incomingMessage)
-                    if incomingMessage == "Farewell! May the force be with you.":
+                    self.chatWindow.addItem("YOU RECEIVED >> " + incomingMessage)
+                    if incomingMessage == "Farewell! May the force be with you.": # modify this properly
                         break
             except:
                 continue
@@ -36,18 +59,15 @@ class MyApp(UIClass, QtBaseClass):  # load the GUI
         print("Disconnected from the server. Please exit the program.")
 
 
+
+# Code below this line should be modified to fit into the GUI
+
+
 app = QtWidgets.QApplication(sys.argv)
-window = MyApp()
+window = ChatGUI()
 window.show()
 sys.exit(app.exec_())
 
-window.lineEdit_3.setPlaceholderText("Hello there")
-
-# setup socket to connect to server
-serverName = input("Enter the server IP address: ")  # localhost is 127.0.0.1
-serverPort = input("Enter the server port (43500 - 43505): ")
-clientSocket = socket(AF_INET, SOCK_STREAM)  # TCP socket
-clientSocket.connect((serverName, int(serverPort)))
 
 # prompt user to enter a username with a welcome message
 welcomeMessage = clientSocket.recv(1024).decode('utf-8')
@@ -60,8 +80,8 @@ outMessage = Thread(target=sendMessage, args=(clientSocket,))
 inMessage.start()
 outMessage.start()
 
-
-
-while 1:  # go on loop until the user enters /quit to exit
+# go on loop until the user enters /quit to exit
+while 1:
     time.sleep(1)  # prevent overload in the processor
     pass
+
