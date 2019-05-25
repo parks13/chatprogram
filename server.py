@@ -33,13 +33,14 @@ def connectClient ():
 def receiveMessage(username, connectionSocket):
     while 1:
         try:  # try to see if message is successfully received and verified
-            message = connectionSocket.recv(1024)  # receive and store message
+            message = connectionSocket.recv(1024).decode('utf-8')  # receive and store message
             if message: # broadcast the message to the clients in the server
+                print("RECEIVED -- " + username + ": " + message)
                 serverMessage(username, message)
 
             else: # remove client if message is not received
                 print("Client", username, "has disconnected.")  # inform the host
-                serverMessage(username, " DISCONNECTED.")
+                serverMessage(username, " DISCONNECTED. [FROM SERVER]")
                 clientsList.remove(connectionSocket)
                 indexKeeper.remove(username)
 
@@ -52,6 +53,7 @@ def serverMessage (username, message):
     for user in clientsList:  # loop through connected clients
         to_send = username + ": " + message # parse the message with username of the sender
         user.send(to_send.encode('utf-8'))
+        print("SENDING -- " + username + ": " + message)
 
 
 # setup socket to wait for connections
