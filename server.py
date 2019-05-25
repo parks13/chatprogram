@@ -1,29 +1,28 @@
 from socket import *
 from threading import *
 import time
-import random
 
 clientsList = []  # list of clients for multiple connection
 indexKeeper = []  # list of names for accessing
 
-# Receive clients and save its info into the list
+# Receive clients and append its info into the list
 def connectClient ():
    while 1:
-        # Accept client
         connectionSocket, addr = serverSocket.accept()  # accept connection from the client
-
+        connectionSocket.send(b"SERVER MESSAGE: Hello there! Please enter your username before you start!")
         username = connectionSocket.recv(1024).decode('utf-8')  # save the user name from the client
         clientsList.append(connectionSocket)  # append the client to the list
         indexKeeper.append(username)   # append the name to the list
 
         print("Client", username, "[", addr, "]", "has connected.")  # inform the host
 
-        serverMessage("[SERVER NOTIFICATION: " + username + " has joined the chat.]") # broadcast to chat room
+        serverMessage(username, " JOINED THE CHAT.") # broadcast to chat room
 
         try:
             # create and starts messaging thread for this client
             messaging = Thread(target=receiveMessage, args=[username, connectionSocket])
             messaging.start()
+
         except:
             continue
 
@@ -35,17 +34,23 @@ def receiveMessage(username, connectionSocket):
     while 1:
         try:  # try to see if message is successfully received and verified
             message = connectionSocket.recv(1024)  # receive and store message
-            if message:  # verify if message is command or not
+            if message: # broadcast the message to the clients in the server
+                serverMessage(username, message)
+
+            else: # remove client if message is not received
+                print("Client", username, "has disconnected.")  # inform the host
+                serverMessage(username, " DISCONNECTED.")
                 clientsList.remove(connectionSocket)
-                serverMessage("SERVER NOTIFICATION: " + username + " has lost connection.")
+                indexKeeper.remove(username)
+
         except:
             continue
 
 
-# Sends out message to all clients about server events
-def serverMessage (message):
+# Sends out message to all clients
+def serverMessage (username, message):
     for user in clientsList:  # loop through connected clients
-        to_send = message
+        to_send = username + ": " + message # parse the message with username of the sender
         user.send(to_send.encode('utf-8'))
 
 
