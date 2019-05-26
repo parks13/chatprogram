@@ -9,7 +9,7 @@ indexKeeper = []  # list of names for accessing
 def connectClient ():
    while 1:
         connectionSocket, addr = serverSocket.accept()  # accept connection from the client
-        connectionSocket.send(b"SERVER MESSAGE: Hello there! Please enter your username before you start!")
+        #connectionSocket.send(b"SERVER MESSAGE: Hello there! Please enter your username before you start!")
         username = connectionSocket.recv(1024).decode('utf-8')  # save the user name from the client
         clientsList.append(connectionSocket)  # append the client to the list
         indexKeeper.append(username)   # append the name to the list

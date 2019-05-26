@@ -25,6 +25,10 @@ class ChatGUI(UIClass, QtBaseClass):
         self.setWindowTitle('Chat Program') # set the title of the program window
         self.userInput.setPlaceholderText("Enter your messages here")
 
+        # Show login page and let the user join the chat with username
+        self.stackedWidget.setCurrentIndex(0)
+        self.joinButton.clicked.connect(self.joinChat)
+
         # Create and start thread of sending and receiving message - **** IS THIS RIGHT? MAYBE USE QTHREAD?? ***
         inMessage = Thread(target=self.receiveMessage, args=())
         outMessage = Thread(target=self.sendMessage, args=())
@@ -35,6 +39,11 @@ class ChatGUI(UIClass, QtBaseClass):
 
         # ADD more setup code for GUI if needed...
 
+    # Function to join the chat with username
+    def joinChat(self):
+        message = self.userNameInput.text()
+        clientSocket.send(message.encode('utf-8'))
+        self.stackedWidget.setCurrentIndex(1) # show the chat page after join button is clicked
 
     # Function to send message to the server
     def sendMessage(self):
