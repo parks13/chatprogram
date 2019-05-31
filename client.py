@@ -23,19 +23,22 @@ class ChatGUI(UIClass, QtBaseClass):
         QtBaseClass.__init__(self)
         self.setupUi(self)
         self.setWindowTitle('Chat Program') # set the title of the program window
+        self.setWindowFlag(QtCore.Qt.WindowMinMaxButtonsHint, False)  # disable windows maximize button
+        self.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, False) # disable windows exit button
         self.userInput.setPlaceholderText("Enter your messages here")
 
         # Show login page and let the user join the chat with username
         self.stackedWidget.setCurrentIndex(0)
         self.joinButton.clicked.connect(self.joinChat)
 
-        # Create and start thread of sending and receiving message - **** IS THIS RIGHT? MAYBE USE QTHREAD?? ***
+        # Create and start thread of sending and receiving message
         inMessage = Thread(target=self.receiveMessage, args=())
         outMessage = Thread(target=self.sendMessage, args=())
         inMessage.start()
         outMessage.start()
 
         self.sendButton.clicked.connect(self.sendMessage) # connect sendButton to sendMessage
+        self.exitButton.clicked.connect(self.exitChat) # connect exit button to exitChat
 
         # ADD more setup code for GUI if needed...
 
@@ -45,9 +48,14 @@ class ChatGUI(UIClass, QtBaseClass):
         clientSocket.send(message.encode('utf-8'))
         self.stackedWidget.setCurrentIndex(1) # show the chat page after join button is clicked
 
+    # Function to terminate the program, lets the server know it is terminating
+    def exitChat(self):
+        exitMsg = "//EXIT//"
+        clientSocket.send(exitMsg.encode('utf-8'))
+        self.close()
+
     # Function to send message to the server
     def sendMessage(self):
-
         # Send message to server and clear the text box
         message = self.userInput.text()
         clientSocket.send(message.encode('utf-8'))

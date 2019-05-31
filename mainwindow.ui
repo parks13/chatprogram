@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>671</width>
-    <height>513</height>
+    <width>653</width>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,12 +19,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>671</width>
+      <width>651</width>
       <height>441</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLineEdit" name="userNameInput">
@@ -63,7 +63,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Enter your username below to joing the chat!</string>
+       <string/>
       </property>
       <property name="pixmap">
        <pixmap>../chatIcon.ico</pixmap>
@@ -80,7 +80,7 @@
      <widget class="QListWidget" name="chatWindow">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>20</x>
         <y>20</y>
         <width>441</width>
         <height>371</height>
@@ -90,7 +90,7 @@
      <widget class="QPushButton" name="sendButton">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>390</x>
         <y>400</y>
         <width>71</width>
         <height>31</height>
@@ -103,7 +103,7 @@
      <widget class="QLineEdit" name="userInput">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>20</x>
         <y>400</y>
         <width>361</width>
         <height>31</height>
@@ -113,10 +113,10 @@
      <widget class="QScrollArea" name="clientList">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>200</y>
+        <x>480</x>
+        <y>40</y>
         <width>151</width>
-        <height>231</height>
+        <height>181</height>
        </rect>
       </property>
       <property name="widgetResizable">
@@ -128,7 +128,7 @@
          <x>0</x>
          <y>0</y>
          <width>149</width>
-         <height>229</height>
+         <height>179</height>
         </rect>
        </property>
       </widget>
@@ -137,13 +137,26 @@
       <property name="geometry">
        <rect>
         <x>490</x>
-        <y>180</y>
+        <y>20</y>
         <width>91</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
        <string>Who's on now?</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="exitButton">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>400</y>
+        <width>51</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>EXIT</string>
       </property>
      </widget>
     </widget>
@@ -154,7 +167,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>671</width>
+     <width>653</width>
      <height>21</height>
     </rect>
    </property>
