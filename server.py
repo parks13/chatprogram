@@ -15,7 +15,7 @@ def connectClient ():
 
         print("Client", username, "[", addr, "]", "has connected.") # inform the host
 
-        serverMessage(username + " JOINED THE CHAT.") # broadcast to chat room
+        serverMessage("[SERVER NOTIFICATION] '" + username + "' JOINED THE CHAT.") # broadcast to chat room
 
         try:
             # create and starts messaging thread for this client
@@ -39,7 +39,7 @@ def receiveMessage(username, connectionSocket):
 
             else: # remove client if message is not received
                 print("Client", username, "has disconnected.") # inform the host
-                serverMessage("[SERVER NOTIFICATION]" + username + " DISCONNECTED.")
+                serverMessage("[SERVER NOTIFICATION] '" + username + "' DISCONNECTED.")
                 clientsList.remove(connectionSocket)
                 indexKeeper.remove(username)
 
@@ -55,7 +55,7 @@ def serverMessage (message):
 
 
 # setup socket to wait for connections
-serverPort = input("Choose a server port (43500 - 43505): ") # prompt host to choose a port
+serverPort = input("Choose a server port (43500 by default): ") # prompt host to choose a port
 serverSocket = socket(AF_INET, SOCK_STREAM) # TCP (reliable)
 serverSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1) # make port reusable
 serverSocket.bind(('', int(serverPort)))

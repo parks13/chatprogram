@@ -1,3 +1,5 @@
+# FOR TESTING MULTIPLE CLIENTS!
+
 from PyQt5 import QtCore, uic, QtWidgets
 from socket import *
 from threading import *
@@ -16,7 +18,6 @@ clientSocket = socket(AF_INET, SOCK_STREAM)  # TCP socket
 clientSocket.connect((serverName, int(serverPort)))
 
 global username # global variable to store username
-# username has to be multiple values so this might not work
 
 # Class to handle the GUI of the chat program
 class ChatGUI(UIClass, QtBaseClass):
@@ -26,8 +27,9 @@ class ChatGUI(UIClass, QtBaseClass):
         QtBaseClass.__init__(self)
         self.setupUi(self)
         self.setWindowTitle('Chat Program') # set the title of the program window
-        self.setWindowFlag(QtCore.Qt.WindowMinMaxButtonsHint, False) # disable windows maximize button
+        self.setWindowFlag(QtCore.Qt.WindowMinMaxButtonsHint, False)  # disable windows maximize button
         self.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, False) # disable windows exit button
+        self.userNameInput.setPlaceholderText("Enter your username here")
         self.userInput.setPlaceholderText("Enter your messages here")
 
         # Show login page and let the user join the chat with username
