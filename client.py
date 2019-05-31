@@ -15,6 +15,8 @@ serverPort = '43500'  # 43500 - 43505 for luke.cs.spu.edu
 clientSocket = socket(AF_INET, SOCK_STREAM)  # TCP socket
 clientSocket.connect((serverName, int(serverPort)))
 
+global username # global variable to store username
+
 # Class to handle the GUI of the chat program
 class ChatGUI(UIClass, QtBaseClass):
     # Constructs the GUI
@@ -47,12 +49,18 @@ class ChatGUI(UIClass, QtBaseClass):
         message = self.userNameInput.text()
         clientSocket.send(message.encode('utf-8'))
         self.stackedWidget.setCurrentIndex(1) # show the chat page after join button is clicked
+        self.listWidget.addItem(message)
+        username = message
+
 
     # Function to terminate the program, lets the server know it is terminating
     def exitChat(self):
+        self.listWidget.removeItem(username)
         exitMsg = "//EXIT//"
         clientSocket.send(exitMsg.encode('utf-8'))
         self.close()
+
+
 
     # Function to send message to the server
     def sendMessage(self):

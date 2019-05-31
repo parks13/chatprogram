@@ -39,6 +39,9 @@
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
+      <property name="placeholderText">
+       <string>Username</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="joinButton">
       <property name="geometry">
@@ -53,20 +56,20 @@
        <string>Join the Chat</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="iconLabel">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>170</y>
-        <width>301</width>
-        <height>41</height>
+        <x>260</x>
+        <y>60</y>
+        <width>151</width>
+        <height>131</height>
        </rect>
       </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../chatIcon.ico</pixmap>
+       <pixmap>chatIcon.ico</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -110,29 +113,6 @@
        </rect>
       </property>
      </widget>
-     <widget class="QScrollArea" name="clientList">
-      <property name="geometry">
-       <rect>
-        <x>480</x>
-        <y>40</y>
-        <width>151</width>
-        <height>181</height>
-       </rect>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>149</width>
-         <height>179</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
      <widget class="QLabel" name="WhosOnNowLabel">
       <property name="geometry">
        <rect>
@@ -157,6 +137,16 @@
       </property>
       <property name="text">
        <string>EXIT</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="listWidget">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>40</y>
+        <width>141</width>
+        <height>192</height>
+       </rect>
       </property>
      </widget>
     </widget>
