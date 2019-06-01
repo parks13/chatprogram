@@ -1,6 +1,6 @@
-Computer Networks Project for Computer Networks (CSC4750)
-Instructor: Dr. Dingler
-Author: Jason Park & Bomin Kim
+* Computer Networks Project for Computer Networks (CSC4750)
+* Instructor: Dr. Dingler
+* Author: Jason Park & Bomin Kim
 
 
 ## About
