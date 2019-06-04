@@ -75,7 +75,7 @@ class ChatGUI(UIClass, QtBaseClass):
                 incomingMessage = clientSocket.recv(1024).decode('utf-8')
                 if incomingMessage:
                     if incomingMessage == "//JOIN//" or incomingMessage == "//EXIT//":
-                        usernameList=[]
+                        usernameList = []
                         incomingMessage = clientSocket.recv(1024).decode('utf-8')
 
                         while incomingMessage != "//..//":

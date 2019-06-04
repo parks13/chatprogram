@@ -33,15 +33,31 @@ def receiveMessage(username, connectionSocket):
     while 1:
         try: # try to see if message is successfully received and verified
             message = connectionSocket.recv(1024).decode('utf-8') # receive and decode message
-            if message != "//EXIT//": # if it is not EXIT message, broadcast to the clients
+            if message != "//EXIT//" and message != "//JOIN//": # if it is not EXIT message nor JOIN message, broadcast to the clients
                 print("RECEIVED -- " + username + ": " + message)
                 serverMessage(username + ": " + message)
 
+            elif message == "//JOIN//":
+                for user in clientsList:  # loop through connected clients
+                    user.send(message.encode('utf-8'))
+                    for name in indexKeeper: # send all username that is active
+                        user.send(name.encode('utf-8'))
+                    done = "//..//"
+                    user.send(done.encode('utf-8'))
+
+
             else: # remove client if message is not received
-                print("Client", username, "has disconnected.") # inform the host
-                serverMessage("[SERVER NOTIFICATION] '" + username + "' DISCONNECTED.")
                 clientsList.remove(connectionSocket)
                 indexKeeper.remove(username)
+                for user in clientsList:  # loop through connected clients
+                    user.send(message.encode('utf-8'))
+                    for name in indexKeeper: # send all username that is active
+                        user.send(name.encode('utf-8'))
+                    done = "//..//"
+                    user.send(done.encode('utf-8'))
+                print("Client", username, "has disconnected.") # inform the host
+                serverMessage("[SERVER NOTIFICATION] '" + username + "' DISCONNECTED.")
+
 
         except:
             continue

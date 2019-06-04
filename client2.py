@@ -1,5 +1,3 @@
-# FOR TESTING MULTIPLE CLIENTS!
-
 from PyQt5 import QtCore, uic, QtWidgets
 from socket import *
 from threading import *
@@ -17,7 +15,8 @@ serverPort = '43500'  # 43500 - 43505 for luke.cs.spu.edu
 clientSocket = socket(AF_INET, SOCK_STREAM)  # TCP socket
 clientSocket.connect((serverName, int(serverPort)))
 
-global username # global variable to store username
+
+# username has to be multiple values so this might not work
 
 # Class to handle the GUI of the chat program
 class ChatGUI(UIClass, QtBaseClass):
@@ -27,9 +26,8 @@ class ChatGUI(UIClass, QtBaseClass):
         QtBaseClass.__init__(self)
         self.setupUi(self)
         self.setWindowTitle('Chat Program') # set the title of the program window
-        self.setWindowFlag(QtCore.Qt.WindowMinMaxButtonsHint, False)  # disable windows maximize button
+        self.setWindowFlag(QtCore.Qt.WindowMinMaxButtonsHint, False) # disable windows maximize button
         self.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, False) # disable windows exit button
-        self.userNameInput.setPlaceholderText("Enter your username here")
         self.userInput.setPlaceholderText("Enter your messages here")
 
         # Show login page and let the user join the chat with username
@@ -52,8 +50,9 @@ class ChatGUI(UIClass, QtBaseClass):
         message = self.userNameInput.text()
         clientSocket.send(message.encode('utf-8'))
         self.stackedWidget.setCurrentIndex(1) # show the chat page after join button is clicked
-        self.listWidget.addItem(message)
-        username = message
+        #self.listWidget.addItem(message)
+        joinMsg = "//JOIN//"
+        clientSocket.send(joinMsg.encode('utf-8'))
 
 
     # Function to terminate the program, lets the server know it is terminating
@@ -76,7 +75,25 @@ class ChatGUI(UIClass, QtBaseClass):
                 # Receive message from server and print it
                 incomingMessage = clientSocket.recv(1024).decode('utf-8')
                 if incomingMessage:
-                    self.chatWindow.addItem(incomingMessage)
+                    if incomingMessage == "//JOIN//" or incomingMessage == "//EXIT//":
+                        usernameList = []
+                        incomingMessage = clientSocket.recv(1024).decode('utf-8')
+                        while incomingMessage != "//..//":
+                            substr = incomingMessage
+                            if substr[-6:] != "//..//":
+                               #self.listWidget.addItem(substr)
+                                usernameList.append(substr)
+                                incomingMessage = clientSocket.recv(1024).decode('utf-8')
+                            else:
+                                #self.listWidget.addItem(incomingMessage[:-6])
+                                usernameList.append(incomingMessage[:-6])
+                                break
+                        self.listWidget.clear()
+                        for username in usernameList:
+                            self.listWidget.addItem(username)
+                            #clientSocket.recv(1024).decode('utf-8')
+                    else:
+                        self.chatWindow.addItem(incomingMessage)
             except:
                 continue
 
