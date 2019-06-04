@@ -15,7 +15,6 @@ serverPort = '43500'  # 43500 - 43505 for luke.cs.spu.edu
 clientSocket = socket(AF_INET, SOCK_STREAM)  # TCP socket
 clientSocket.connect((serverName, int(serverPort)))
 
-
 # username has to be multiple values so this might not work
 
 # Class to handle the GUI of the chat program
@@ -75,24 +74,21 @@ class ChatGUI(UIClass, QtBaseClass):
                 # Receive message from server and print it
                 incomingMessage = clientSocket.recv(1024).decode('utf-8')
                 if incomingMessage:
-                    if incomingMessage == "//JOIN//" or incomingMessage == "//EXIT//":
-                        usernameList = []
+                    if incomingMessage == "//JOIN//" or incomingMessage == "//EXIT//": # if a command is recvd from the server
+                        usernameList=[]
                         incomingMessage = clientSocket.recv(1024).decode('utf-8')
-                        while incomingMessage != "//..//":
+                        while incomingMessage != "//..//": # get the usernames until there is a sign for done
                             substr = incomingMessage
-                            if substr[-6:] != "//..//":
-                               #self.listWidget.addItem(substr)
-                                usernameList.append(substr)
-                                incomingMessage = clientSocket.recv(1024).decode('utf-8')
-                            else:
-                                #self.listWidget.addItem(incomingMessage[:-6])
-                                usernameList.append(incomingMessage[:-6])
+                            if substr[-6:] != "//..//": # getting usernames
+                                usernameList.append(substr) # put the username in the list
+                                incomingMessage = clientSocket.recv(1024).decode('utf-8') # get next username
+                            else: # getting the last username
+                                usernameList.append(incomingMessage[:-6]) # put it in the list
                                 break
-                        self.listWidget.clear()
-                        for username in usernameList:
+                        self.listWidget.clear() # empty out the listWidget
+                        for username in usernameList: # populate the listWidget with the usernames in the list
                             self.listWidget.addItem(username)
-                            #clientSocket.recv(1024).decode('utf-8')
-                    else:
+                    else: # normal chat function
                         self.chatWindow.addItem(incomingMessage)
             except:
                 continue

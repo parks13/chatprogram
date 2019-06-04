@@ -39,22 +39,22 @@ def receiveMessage(username, connectionSocket):
 
             elif message == "//JOIN//":
                 for user in clientsList:  # loop through connected clients
-                    user.send(message.encode('utf-8'))
+                    user.send(message.encode('utf-8')) # send the command to the client side
                     for name in indexKeeper: # send all username that is active
                         user.send(name.encode('utf-8'))
                     done = "//..//"
-                    user.send(done.encode('utf-8'))
+                    user.send(done.encode('utf-8')) # indicate that it's done
 
 
             else: # remove client if message is not received
                 clientsList.remove(connectionSocket)
                 indexKeeper.remove(username)
                 for user in clientsList:  # loop through connected clients
-                    user.send(message.encode('utf-8'))
+                    user.send(message.encode('utf-8')) # send the command to the client side
                     for name in indexKeeper: # send all username that is active
                         user.send(name.encode('utf-8'))
                     done = "//..//"
-                    user.send(done.encode('utf-8'))
+                    user.send(done.encode('utf-8')) # indicate that it's done
                 print("Client", username, "has disconnected.") # inform the host
                 serverMessage("[SERVER NOTIFICATION] '" + username + "' DISCONNECTED.")
 
