@@ -57,8 +57,6 @@ def receiveMessage(username, connectionSocket):
                     user.send(done.encode('utf-8')) # indicate that it's done
                 print("Client", username, "has disconnected.") # inform the host
                 serverMessage("[SERVER NOTIFICATION] '" + username + "' DISCONNECTED.")
-
-
         except:
             continue
 

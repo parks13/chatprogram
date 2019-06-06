@@ -42,14 +42,11 @@ class ChatGUI(UIClass, QtBaseClass):
         self.sendButton.clicked.connect(self.sendMessage) # connect sendButton to sendMessage
         self.exitButton.clicked.connect(self.exitChat) # connect exit button to exitChat
 
-        # ADD more setup code for GUI if needed...
-
     # Function to join the chat with username
     def joinChat(self):
         message = self.userNameInput.text()
         clientSocket.send(message.encode('utf-8'))
         self.stackedWidget.setCurrentIndex(1) # show the chat page after join button is clicked
-        #self.listWidget.addItem(message)
         joinMsg = "//JOIN//"
         clientSocket.send(joinMsg.encode('utf-8'))
 
