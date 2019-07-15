@@ -19,7 +19,7 @@ You may use a compiler of your choice or a command prompt to run this program in
 
 
 ## Known Bugs
-The chat server uses threading. We believe because of threading's possble delay for each clients, the client list gets parsed wrongly. This randomly occurs when there is 3 or more clients in which server has to take care of in each thread.
+The chat server uses threading. We believe because of threading's possble delay for each clients, the client list randomly gets parsed in the wrong order. This occurs when there is 3 or more clients in which server has to take care of multiple clients.
 
 
 ## Note
